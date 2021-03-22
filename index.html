@@ -1,3 +1,193 @@
+1
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>JS DOM paragraph style</title>
+</head> 
+<body>
+<p id ='text'>JavaScript Exercises - w3resource</p> 
+<div>
+<button id="jsstyle"
+onclick="js_style()">Style</button>
+</div>
+<script>
+    function js_style (){
+        let myText = document.getElementById("text");
+        myText.style.fontFamily = "Arial, Helvetica, sans-serif"
+        myText.style.fontSize = "30px"
+        myText.style.color = "red"
+    }
+</script>
+</body>
+</html> -->
+2
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8 />
+<title>Return first and last name from a form - w3resource</title>
+</head><body>
+<form id="form1" onsubmit="getFormvalue(event)">
+First name: <input type="text" name="fname" value="David"><br>
+Last name: <input type="text" name="lname" value="Beckham"><br>
+<input type="submit" value="Submit">
+</form>
+<script>
+    function getFormvalue(event){
+        event.preventDefault();
+        let myfirstName = document.getElementById("form1")['fname'].value;
+        let mylastName = document.getElementById("form1")['lname'].value;
+        console.log(myfirstName, mylastName);
+    }
+</script>
+</body>
+</html>
+3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id ='text' onclick="word()">asdlnalknglafgjanfglsnadgklnalkgnaf</p> 
+<script>
+    function word(){
+        let myText = document.getElementById("text");
+        myText.style.backgroundColor = "red"
+    }
+</script>
+</body>
+</html>
+4
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8 />
+</head>
+<body>
+<p><a id="w3r" type="text/html" hreflang="en-us" rel="nofollow" target="_self" href="https://www.w3resource.com/">w3resource</a></p>
+<button onclick="getAttributes()">Click here to get  attributes value</button>
+<script>
+    function getAttributes(){
+        let a = document.getElementById("w3r");
+        console.log(a.href);
+        console.log(a.hreflang);
+        console.log(a.rel);
+        console.log(a.target);
+        console.log(a.type);
+    }
+</script>
+</body>
+</html>
+5
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Insert row in a table - w3resource</title>
+</head>
+<body>
+<table id="sampleTable" border="1">
+<tr>
+    <td>Row1 cell1</td>
+    <td>Row1 cell2</td>
+</tr>
+<tr>
+    <td>Row2 cell1</td>
+    <td>Row2 cell2</td>
+</tr>
+</table>
+<br>
+<input type="button" onclick="insert_Row()" value="Insert row"> 
+<script>
+    function insert_Row(){
+        let row = document.getElementById('sampleTable')
+        let row3 = 
+        ' <tr> <td>Row3 cell3</td> <td>Row3 cell3</td></tr>'
+        document.getElementById('sampleTable').innerHTML += row3;
+    }
+</script>
+</body>
+</html>
+6
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Remove items from a dropdown list</title>
+</head>
+<body>
+<form>
+<select id="colorSelect">
+<option id="red">Red</option>
+<option id="green">Green</option>
+<option id="white">White</option>
+<option id="Black">Black</option>
+</select>
+<input type="button" onclick="removecolor()"  id ="color"value="Select and Remove">
+<script>
+    function removecolor(){
+        var x = document.getElementById("colorSelect");
+        x.remove(x.selectedIndex);
+    }
+</script>
+</form>
+</body>
+</html>
+6.1
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8 />
+<title>Remove items from a dropdown list</title>
+</head><body><form>
+<select id="colorSelect">
+<option>Red</option>
+<option>Green</option>
+<option>White</option>
+<option>Black</option>
+</select>
+<input type=”text” id=’textField’ >
+<input type="button" onclick="removecolor()" value="Select and Remove">
+</form>
+<script>
+    function removecolor(){
+        let a = document.getElementById("colorSelect");
+        var option = document.createElement("option");
+        option.text = document.getElementById("’textField’").value;
+        a.add(option);
+    }
+</script>
+</body></html>
+7
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="http://farm4.staticflickr.com/3691/11268502654_f28f05966c_m.jpg"  width= "240" height= "160" class="image" alt="" style="display: none;">
+    <img src="http://farm1.staticflickr.com/33/45336904_1aef569b30_n.jpg" width= "320"  height= "195" class="image" alt="" style="display: none;">
+    <img src="http://farm6.staticflickr.com/5211/5384592886_80a512e2c9.jpg" width="500" height = "343" class="image" alt="" style="display: none;">
+    <button onclick="display()">Display image</button>
+    <script>
+            function display(){
+                let a = document.getElementsByClassName('image');
+                    let numberRandom = Math.floor(Math.random() * 3);
+                    for(let i of a){
+                        i.style.display = 'none';
+                    }
+                    a[numberRandom].style.display = 'block';
+                
+            }
+    </script>
+</body>
+</html>
+8
 <!DOCTYPE html>
 <html lang="en">
 <head>
