@@ -5,42 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="index.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <div id="div1">
-    <input type="text" id="a">
-    <button onclick="getData()">Submit</button>
-    <div id="div2">
-        <h1>Weather</h1>
-        <div class="description"></div>
-        <div class="icon"></div>
-        <div class="temprature"></div>
-        <div class="descriptionmain"></div>
-        <div class="cityname"></div>
-    </div>
-   </div>
-    <script>
-        let getData = async ()=>{
-        let city = document.querySelector('#a').value;
-        let preData = await
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=3ce7927a3aa6f9c1ae31da1fa158940c`)
-        let data = await preData.json()
-        console.log(data);
-        let des = document.querySelector('.description');
-        des.innerHTML = `${data.weather[0].description}`
-        let icon = document.querySelector(".icon");
-        icon.innerHTML = `<img src ='http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png'>`;
-        let temp = document.querySelector('.temprature');
-        temp.innerHTML = `${data.main.temp}`;
-        let desmain = document.querySelector(".descriptionmain");
-        desmain.innerHTML = `${data.weather[0].main}`
-        let cname = document.querySelector('.cityname');
-        cname.innerHTML = `${data.name}`
-}
-    </script>
-   
-
+    <script src="index.js"></script>
 </body>
 </html>
