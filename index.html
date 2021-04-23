@@ -7,12 +7,18 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div id="a" class="a">Lucky Number</div>
-    <h3>Dự đoán con số của bạn nằm trong khoảng từ 1 đến 10</h3>
-    <input type="text" size="40" placeholder="Nhập con số mà bạn dự đoán" name="Number" id="">
-    <button>Quay số</button>
-    <p id="kqsx"></p>
+<body class="container">
+    <div id="luckyNumber" class="container colum full">
+        <div id="header" class="container colum full">Lucky Number</div>
+        <div id="body" class="container colum full">
+            <p id="predict">Dự đoán con sô của bạn nằm trong khoảng từ 1 đến 10 </p>
+            <p id="count">Bạn còn 3 lượt chọn</p>
+            <div id="guess" class="container row full" >
+                <input type="text" id="guess-input" placeholder="Nhập con số mà bạn dự đoán">
+                <button id="guess-btn" value="ok" onclick="spin()">Quay Số</button>
+            </div>
+        </div>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
