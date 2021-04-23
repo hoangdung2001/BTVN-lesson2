@@ -1,12 +1,29 @@
-function findOppositeNumber(n,inputNumber){
-    if(inputNumber < n/2){
-        return inputNumber + n/2;
+a = prompt("Nhập s1")
+n = prompt("Nhập s2")
+function findOppsiteNumber(a, n) {
+  let c = "";
+  if (a.length === n.length) {
+    for (let i in a) {
+      c += a[i] + n[i];
     }
-    else{
-        if(inputNumber !== n/2){
-            return inputNumber - n/2;
-        }
-        else return 0;
+  } else {
+    if (a.length > n.length) {
+      for (let i in n) {
+        c += a[i] + n[i];
+      }
+      for (let j = n.length; j < a.length; j++) {
+        c += a[j];
+      }
     }
+    if (n.length > a.length) {
+      for (let i in a) {
+        c += a[i] + n[i];
+      }
+      for (let j = a.length; j < n.length; j++) {
+        c += n[j];
+      }
+    }
+  }
+  return c;
 }
-console.log(findOppositeNumber(10,6));
+console.log(findOppsiteNumber(a,n));
