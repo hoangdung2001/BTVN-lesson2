@@ -1,0 +1,18 @@
+Bài 3 (1.5đ): Tìm hiểu về WebComponent:
+-	Khái niệm : là một bộ các công nghệ khác nhau cho phép bạn tạo các phần tử tùy chỉnh có thể tái sử dụng - với chức năng của chúng được gói gọn trong phần còn lại của mã - và sử dụng chúng trong các ứng dụng web của bạn
+-	Vì sao cần dung : Là các nhà phát triển, chúng ta đều biết rằng việc sử dụng lại mã càng nhiều càng tốt là một ý tưởng hay. Điều này theo truyền thống không quá dễ dàng đối với các cấu trúc đánh dấu tùy chỉnh - hãy nghĩ đến HTML phức tạp (và kiểu và tập lệnh liên quan) mà đôi khi bạn phải viết để hiển thị các điều khiển giao diện người dùng tùy chỉnh và cách sử dụng chúng nhiều lần có thể biến trang của bạn thành một mớ hỗn độn nếu bạn không cẩn thận.
+Thành phần Web nhằm mục đích giải quyết những vấn đề như vậy - nó bao gồm ba công nghệ chính, có thể được sử dụng cùng nhau để tạo ra các phần tử tùy chỉnh linh hoạt với chức năng được đóng gói có thể được sử dụng lại ở bất cứ đâu bạn muốn mà không sợ xung đột mã.
+
+-	Công nghệ sử dụng trong WebComponent : gồm 3 công nghệ riêng biệt được sử dụng cùng nhau :
++ Shadow DOM : có khả năng cô lập CSS và JavaScript, gần giống như <iframe>
+	Là một phiên bản đóng gói của DOM. Điều này cho phép các tác giả cách ly hiệu quả các đoạn DOM với nhau, bao gồm mọi thứ có thể được sử dụng làm bộ chọn CSS và các kiểu được liên kết với chúng. Nói chung, bất kỳ nội dung nào trong phạm vi tài liệu đều được gọi là light DOM và bất kỳ nội dung nào trong shadow root đều được gọi là shadow DOM
++ Custom Elements : nói một cách đơn giản, đây là các thành phần HTML hợp lệ với các template, behaviors và tag game tùy chỉnh ( ví dụ : <one-dialog> ) được tạo bằng một bộ phận API JavaScript. Các thành phần tùy chỉnh được mô tả trong custom – element.
+Là các thành phần HTML, như <div>, <section> hoặc <article>, nhưng một cái gì đó chúng ta có thể tự đặt tên cho chúng, được xác định thông qua API trình duyệt. Custom elements giống như các phần tử HTML tiêu chuẩn đó – tên trong ngoặc <> - ngoại trừ chúng luôn có dấu gạch ngang, như <news-slider> hoặc <bacon - cheeseburger>. Trong tương lai, các nhà cung cấp trình duyệt đã cam kết không tạo ra các yếu tố tích hợp mới có chứa dấu gạch ngang trong tên để ngăn xung đột.
+
++ HTML templates : Các template do người dùng xác định trong HTML không được hiển thị cho đến khi được gọi. Thẻ <template> được xác định trong template-element
+	Cho phép dập tắt các mẫu mã có thể sử dụng lại bên trong một luồng HTML thông thường sẽ không được hiển thị ngay lập tức, nhưng có thể được sử dụng sau đó.
+Đây là những gì tạo nên đặc tả cho web components
++ HTML Modules có thể là công nghệ thứu tư trong danh sách trên, nhưng nó vẫn chưa được triển khai trong bất kỳ trình duyệt lớn nào . Nhóm chorme đã thông báo ý định triển khai chúng trong phiên bản tương lai
+
+
+
