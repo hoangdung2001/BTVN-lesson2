@@ -1,0 +1,205 @@
+const template = document.createElement('template');
+template.innerHTML = `
+  <style>
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.register-course{
+  width:80%;
+  height:100%;
+  border:1px solid #ccc;
+
+}
+.register-course-form{
+  width:100%;
+  height:100%;
+  padding: 10px;
+}
+.img_course{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+img{
+  width:60%;
+  height:60%;
+}
+.course_info{
+  margin-top:20px;
+}
+.course_label, .user_label{
+  text-align:center;
+  font-size:30px;
+  margin:10px 0 ;
+}
+.input_wrapper{
+  padding:10px 0;
+}
+label{
+  display:block;
+}
+input{
+  padding: 1px;
+    width: 90%;
+    margin-top: 3px;
+}
+.btn_control{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+button{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    outline: none;
+    background-color: rgb(4,170,109);
+    cursor:pointer;
+}
+  </style>
+   <form class ='register-course'>
+    <div class = 'register-course-form'>
+           <div class="img_course">
+             <img src="" alt="" class="img" />
+           </div>
+            <div class="course_info">
+                <div class="course_label">
+                    Thông tin Khóa Học
+                 </div>
+                 <div class="course_name">
+                
+                 </div>
+                 <div class="course_teacher">
+                
+                 </div>
+                 <div class="course_shape">
+                
+                 </div>
+                 <div class="course_time">
+                
+                 </div>
+                 <div class="course_fee">
+                
+                 </div>
+            </div>
+            <div class="user_info">
+              <div class="user_label">
+                Thông tin Người Dùng
+              </div>
+              <div class="user_name input_wrapper">
+                <label>Name:</label>
+                <input type="text" class="name_input" required/>
+                <div class = 'name_input-error'></div>
+              </div>
+              <div class="user_gender" input_wrapper>
+              <label>Gender:</label>
+                <select  name="gendr" class="gender_input" id="gender" required>
+                  <option value="other">Other</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                 </select>
+                <div class = 'gender_input-error'></div>
+              </div>
+              <div class="user_age input_wrapper">
+              <label>Age:  </label>
+                <input type="text" class="age_input" required/>
+                <div class = 'age_input-error'></div>
+              </div>
+              <div class="user_email input_wrapper">
+              <label>Email:</label>
+                <input type="email" class="email_input" required/>
+                <div class = 'email_input-error'></div>
+              </div>
+              <div class="user_address input_wrapper">
+              <label>Address:</label>
+                <input type="text" class="address_input" required/>
+                <div class = 'address_input-error'></div>
+              </div>
+              <div class="user_phoneNumber input_wrapper">
+              <label>PhoneNumber:</label>
+              <input type="text" class="phoneNumber_input" required/>
+              <div class = 'phoneNumber_input-error'></div>
+              </div>
+
+        </div>
+      <div class="btn_control">
+      <button type="submit" class="register">Register</button>
+      <button type="text" class="register_close">Close</button></div>
+     </div>
+   </form>
+   `
+
+class RegisterCourse extends HTMLElement {
+  constructor() {
+    super()
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadowRoot.querySelector(".course_fee").innerText = `Học học : ${this.getAttribute("fee")}`;
+    this.shadowRoot.querySelector(".img").src = this.getAttribute("img");
+    this.shadowRoot.querySelector(".course_name").innerText = `Tên Khóa Học :${this.getAttribute("name")}`;
+    this.shadowRoot.querySelector(".course_teacher").innerText = `Giáo Viên : ${this.getAttribute("teacher")}`;
+    this.shadowRoot.querySelector(".course_shape").innerText = `Hình thức : ${this.getAttribute("shape")}`;
+    this.shadowRoot.querySelector(".course_time").innerText = `Thời Gian : ${this.getAttribute("time")}`;
+    this.shadowRoot.querySelector(".register_close").addEventListener("click", () => {
+      const root = document.querySelector("#form_register_wrapper");
+      root.innerHTML = "";
+    })
+
+  }
+  validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+  connectedCallback() {
+
+    this.shadowRoot.querySelector(".register-course").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      this.shadowRoot.querySelector(".age_input-error").innerHTML = "";
+      this.shadowRoot.querySelector(".email_input-error").innerHTML = "";
+      this.shadowRoot.querySelector(".phoneNumber_input-error").innerHTML = "";
+      this.name = this.shadowRoot.querySelector(".name_input").value;
+      this.gender = this.shadowRoot.querySelector(".gender_input").value;
+      this.age = this.shadowRoot.querySelector(".age_input").value;
+      this.email = this.shadowRoot.querySelector(".email_input").value;
+      this.address = this.shadowRoot.querySelector(".address_input").value;
+      this.phoneNumber = this.shadowRoot.querySelector(".phoneNumber_input").value;
+      if (Number.isInteger(Number(this.age)) == false) {
+        this.shadowRoot.querySelector(".age_input-error").innerHTML = `Age is a number`;
+        return;
+      }
+      if (!this.validateEmail(this.email)) {
+        this.shadowRoot.querySelector(".email_input-error").innerHTML = `Email is not valid`;
+        return;
+      }
+      if (Number.isInteger(Number(this.phoneNumber)) == false || this.phoneNumber.length != 10) {
+        this.shadowRoot.querySelector(".phoneNumber_input-error").innerHTML = `Phone number is not valid ! Required string of number and has length equal by 10`;
+        return;
+      }
+
+      let register = await firebaseCourse.where("name", "==", this.getAttribute("name")).get();
+      
+      firebaseCourse.doc(register.docs[0].id).update({
+        register: firebase.firestore.FieldValue.arrayUnion({
+          name: this.name,
+          gender: this.gender,
+          age: this.age,
+          email: this.email,
+          address: this.address,
+          phoneNumber: this.phoneNumber,
+        }),
+
+      })
+      const root = document.querySelector("#form_register_wrapper");
+      console.log(root);
+      root.innerHTML = `<div>Chúc mừng bạn đã đăng ký thành công khóa học ${this.getAttribute("name")}</div>`;
+    })
+
+
+  }
+}
+
+window.customElements.define('registercourse-user', RegisterCourse);
