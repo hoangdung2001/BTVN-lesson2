@@ -5,20 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+<link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
-    <div id="name">Name:</div>
-    <img id="image">
-    <div id="dateModified">DateModified:</div>
-    <button id="m1">MEME 1</button>
-    <button id="m2">MEME 2</button>
-    <button id="m3">MEME 3</button>
-    <button id = "addm1">add Meme 1 </button>
-    <button id = "addm2">add Meme 2 </button>
-    <button id = "addm3">add Meme 3 </button>
-    <button id = "deletem1">delete Meme 1 </button>
-    <button id = "deletem2">delete Meme 2 </button>
-    <button id = "deletem3">delete Meme 3 </button>
-    <script src="./index.js" type="module"></script>
+    <div class="form_user">
+        <form id="Write_signIn">
+            <input type="email" name="email" placeholder="Enter your email">
+            
+            <input type="password" name="password" placeholder="Enter your password">
+            <button id="Submit-btn">Submit</button>
+        </form>
+    </div>
+    <div class="form_comment">
+       <form id="Write_comment">
+        <input type="text" name="comment" placeholder="Enter your comment">
+        <button id="Submit-btn">Submit</button>
+       </form>
+    </div>
+    <div class="comment_list">
+  
+    </div>
+    <div class="img_course">
+        <div class="img_list">
+            <a  id="img1" class="img_wrapper"><img src="https://hinhanhdep.vn/wp-content/uploads/2019/06/hinh-anh-hoa-anh-dao-nhat-ban-dep-nhat-6.jpg" alt="" id="img2" class="img"></a>
+            <a  id="img1" class="img_wrapper">  <img src="https://media.ex-cdn.com/EXP/media.tapchigiaothong.vn/files/minh.phuong/2016/03/02/ha-noi-trong-200-cay-hoa-anh-dao-nhat-tai-cong-vien-hoa-binh-1537.jpg" alt="" id="img1" class="img"></a>
+        </div>
+        <div  id="form_register_wrapper"></div>
+    </div>
+
+    <script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyBh5EIU_76ZHHYnBEV35BDQ0wUNDDldvDI",
+    authDomain: "ci61team3-799ee.firebaseapp.com",
+    projectId: "ci61team3-799ee",
+    storageBucket: "ci61team3-799ee.appspot.com",
+    messagingSenderId: "200444356772",
+    appId: "1:200444356772:web:5b60c6c4b8da52b5489e31",
+    measurementId: "G-Q5JJMMB3B9"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+    <script src="./registerCourse.js"></script>
+    <script  src="./module.js"></script>
+    <script src="./index.js"></script>
 </body>
 </html>
