@@ -1,84 +1,138 @@
-export class DoGiaDung {
-    constructor(dinhdanh, ten, gia, nhasx, giamgia, ngaynhap, doben) {
-        this.dinhdanh = dinhdanh;
-        this.ten = ten;
-        this.gia = gia;
-        this.nhasx = nhasx;
-        this.giamgia = giamgia;
-        this.ngaynhap = ngaynhap;
-        this.doben = doben;
+const list = document.querySelector(".comment_list");
+const arr = []
+const firebaseComment = firebase.firestore().collection("comment");
+const firebaseCourse = firebase.firestore().collection("course");
+const form = document.querySelector("#form_register_wrapper");
+const fb = () => {
+    console.log('zoday')
+    let html = "";
+    firebaseComment.orderBy("time", "desc").onSnapshot(querySnapshot => {
+        let html1 = "";
+
+        querySnapshot.docChanges().forEach((change) => {
+            const { doc } = change;
+            console.log(change);
+            if (change.type === "added") {
+
+                if (change.doc.data().pId === undefined) {
+                    html = `<comment-user level=1 comment = "${doc.data().comment}" id="${doc.id}" name="${doc.data().name}" hour="${doc.data().time}"
+                    like = "${doc.data().like}"  dislike = "${doc.data().dislike}"   numberOfComment = "${doc.data().numberOfComment}" replyLever="${doc.data().replyLever}"
+                    style = "display: block" class="Lever${doc.data().replyLever}"></comment-user>`
+                    arr.push(html);
+                }
+            }
+            if (change.type === "modified") {
+                html = `<comment-user show=true levelToShow=4 level=1 comment = "${doc.data().comment}" id="${doc.id}" name="${doc.data().name}" hour="${doc.data().time}"
+                like = "${doc.data().like}"  dislike = "${doc.data().dislike}" numberOfComment = "${doc.data().numberOfComment}" replyLever="${doc.data().replyLever}"
+                style = "display: block" class="Lever${doc.data().replyLever}"></comment-user>`
+                const index = getIndex(arr, doc.id)
+
+                arr[index] = html
+            }
+            if (change.type === "removed") {
+                console.log("Removed city: ", change.doc.data());
+            }
+            html1 = getHtmlFromAraay(arr)
+            console.log(html1);
+
+            list.innerHTML = html1
+        });
+
+    })
+    const signIn = document.querySelector("#Write_signIn");
+    signIn.addEventListener("submit", (e) => {
+        e.preventDefault();
+        firebase.auth().signInWithEmailAndPassword(signIn["email"].value, signIn["password"].value)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                console.log(user);
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+            });
+    })
+
+
+
+}
+fb();
+
+const courseFc = () => {
+    const course = document.querySelector(".img_course");
+    document.querySelectorAll(".img_wrapper").forEach((item, index) => {
+        item.addEventListener("click", async () => {
+
+            let img = document.querySelectorAll(".img")[index].getAttribute("src")
+            let html = "";
+            const getItem = await firebaseCourse.where("img", "==", img).get();
+
+            html = `<registercourse-user fee="${getItem.docs[0].data().fee}" img="${getItem.docs[0].data().img}" name="${getItem.docs[0].data().name}"
+          shape="${getItem.docs[0].data().shape}" teacher="${getItem.docs[0].data().teacher}" time="${getItem.docs[0].data().time}"
+        class="module_registercourse"  ></registercourse-user>`
+            console.log(form);
+            form.innerHTML = html;
+
+            // item.href = "#form_register_wrapper"
+
+            $('body, html').animate({ scrollTop: $("#form_register_wrapper").offset().top }, 1000);
+
+        })
+
+    })
+}
+courseFc();
+
+const writeComment = () => {
+    let userId;
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            userId = user.email;
+
+            // ...
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
+    let comment = document.querySelector("#Write_comment")
+    if (userId !== null) {
+        comment.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            firebaseComment.add({
+                comment: comment["comment"].value,
+                time: Date.now(),
+                name: userId,
+                like: 0,
+                dislike: 0,
+                userEmotion: [],
+                numberOfComment: 0,
+                replyLever: 0
+            })
+            comment["comment"].value = "";
+        })
     }
+
+
+
 }
-export class QuanAo {
-    constructor(dinhdanh, ten, gia, nhasx, giamgia, ngaynhap, xuatxu, chatlieu) {
-        this.dinhdanh = dinhdanh;
-        this.ten = ten;
-        this.gia = gia;
-        this.nhasx = nhasx;
-        this.giamgia = giamgia;
-        this.ngaynhap = ngaynhap;
-        this.xuatxu = xuatxu;
-        this.chatlieu = chatlieu;
-    }
-}
-export class DoAn {
-    constructor(dinhdanh, ten, gia, nhasx, giamgia, ngaynhap, vi) {
-        this.dinhdanh = dinhdanh;
-        this.ten = ten;
-        this.gia = gia;
-        this.nhasx = nhasx;
-        this.giamgia = giamgia;
-        this.ngaynhap = ngaynhap;
-        this.vi = vi;
-    }
+writeComment();
+
+const getHtmlFromAraay = (array) => {
+    return array.reduce((html, arrayItem) => {
+        return html += arrayItem
+    }, '')
 }
 
-export function addItem(type, arr) {
-    arr.push(type);
-    console.log(arr);
+
+const getIndex = (aray, id) => {
+    const regex = new RegExp(id, 'g')
+    return aray.findIndex((item) => {
+        return regex.test(item)
+    })
 }
-export function sell(type, arr, arr1) {
-    arr.splice(arr.indexOf(type), 1);
-    arr1.push(type);
-    console.log(arr, arr1);
-}
-export function checkBill(arr1) {
-    let bill = 0;
-    bill = arr1.reduce((a, b) =>
-        (a.gia - a.gia / a.giamgia) + (b.gia - b.gia / b.giamgia)
-    )
-    console.log(bill);
-}
-
-import { Meme, show, update } from './Meme.js';
-import { MemeCollection, add, updateMemeCollection, deleteMemeCollection } from './memeCollection.js';
-import { DoGiaDung, QuanAo, DoAn, addItem, sell, checkBill } from './QLBH.js';
-var date = new Date();
-const meme1 = new Meme(0, "smile", "https://s.memehay.com/files/posts/20200825/914176dc80ac20c0213a2e0279d82b32gau-truc-cao-tu.jpg", `${date.getDate()}`);
-const meme2 = new Meme(1, "playing", "https://s.memehay.com/files/posts/20201124/gau-truc-danh-ban-noi-trai-dep-trai-dep-suot-ngay-chi-biet-trai-dep.jpg", `${date.getDate()}`);
-const meme3 = new Meme(2, "smile", "https://s.memehay.com/files/posts/20200815/a7f31b85d6c2fa8cc1ec8049d12df43fgau-truc-danh-noi-nay-thi-ngang-nguoc.jpg", `${date.getDate()}`);
-const memeCollection = new MemeCollection(1, "playing", "hoang", []);
-document.querySelector("#m1").addEventListener("click", () => show(meme1));
-document.querySelector("#m2").addEventListener("click", () => show(meme2));
-document.querySelector("#m3").addEventListener("click", () => show(meme3));
-update({ name: "bye", dateModified: `${date.getDay()}` }, meme1)
-document.querySelector("#addm1").addEventListener("click", () => add(meme1, memeCollection.memes));
-document.querySelector("#addm2").addEventListener("click", () => add(meme2, memeCollection.memes));
-document.querySelector("#addm3").addEventListener("click", () => add(meme3, memeCollection.memes));
-
-document.querySelector("#deletem1").addEventListener("click", () => deleteMemeCollection(meme1, memeCollection.memes));
-document.querySelector("#deletem2").addEventListener("click", () => deleteMemeCollection(meme2, memeCollection.memes));
-document.querySelector("#deletem3").addEventListener("click", () => deleteMemeCollection(meme3, memeCollection.memes));
-
-const item1 = new DoGiaDung("do gia dung", "noi com dien", 100, "hoang", 10, date.getDate(), 80);
-const item2 = new QuanAo("quanMy", "shirt", 150, "AmericanShirt", 5, date.getDate(), "American", "silve");
-const item3 = new DoAn("HaiSan", "Crab", 50, "Ban", 2, date.getDate(), "sweet");
-let kholuutru = [];
-let hanghoa = [];
-
-addItem(item1, hanghoa);
-addItem(item2, hanghoa);
-addItem(item3, hanghoa);
-sell(item1, hanghoa, kholuutru);
-sell(item3, hanghoa, kholuutru);
-checkBill(kholuutru);
